@@ -1,27 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Referenciamos la barra de búsqueda y todas las filas de la tabla
-    const barraBusqueda = document.getElementById("searchTrack");
-    const filasTabla = document.querySelectorAll(".tracking-table tbody tr");
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchTrack');
 
-    // Verificar si el buscador existe en la pantalla actual
-    if (barraBusqueda) {
-        // 2. Escuchamos cada vez que el usuario teclea una letra
-        barraBusqueda.addEventListener("keyup", (evento) => {
-            // Convertimos lo que escribiste a minúsculas para que no importe si usás mayúsculas
-            const textoBuscado = evento.target.value.toLowerCase().trim();
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            
+            // Leemos del array global sincronizado
+            const viajesActuales = window.viajesCompartidos || [];
 
-            // 3. Revisamos fila por fila de la tabla
-            filasTabla.forEach((fila) => {
-                // Sacamos todo el texto de la fila (Placa, chofer, cliente, etc.) y lo hacemos minúscula
-                const contenidoFila = fila.innerText.toLowerCase();
-
-                // 4. Si el texto buscado está dentro de la fila, se queda; si no, se oculta
-                if (contenidoFila.includes(textoBuscado)) {
-                    fila.style.display = ""; // Muestra la fila normal
-                } else {
-                    fila.style.display = "none"; // Oculta la fila por completo
-                }
+            // Filtrar por placa de tracto o por el nombre del cliente consignatario
+            const filtrados = viajesActuales.filter(viaje => {
+                const placa = viaje.placaTracto ? viaje.placaTracto.toLowerCase() : '';
+                const cliente = viaje.cliente ? viaje.cliente.toLowerCase() : '';
+                return placa.includes(term) || cliente.includes(term);
             });
+
+            // Invocar la función expuesta globalmente sin errores
+            if (typeof window.renderTrackingTable === 'function') {
+                window.renderTrackingTable(filtrados);
+            } else {
+                console.error("Error crítico: La función de renderizado no está accesible.");
+            }
         });
     }
 });
