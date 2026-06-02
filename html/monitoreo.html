@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RODOWAY - Monitoreo de Rutas</title>
+    <link rel="stylesheet" href="/css/monitoreo.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>RODOWAY</h2>
+        <ul>
+            <li><a href="/html/index.html">🚚 Registro / Edición</a></li>
+            <li><a href="/html/monitoreo.html" class="active">📋 Monitoreo de Rutas</a></li>
+            <li><a href="/html/historial.html">📊 Historial / Reportes</a></li>
+            <li><a href="#">⚙️ Configuración</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Monitoreo de Rutas en Tiempo Real</h1>
+            <div class="search-box">
+                <input type="text" id="searchTrack" placeholder="🔍 Buscar por Placa o Cliente...">
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="tracking-table">
+                <thead>
+                    <tr>
+                        <th>Camión / Chofer</th>
+                        <th>Cliente / Fábrica</th>
+                        <th>Origen / Destino</th>
+                        <th>Estado Actual</th>
+                        <th>Docs (CRT / MIC)</th>
+                        <th>Última Nota de Bitácora</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- La tabla arranca vacía para que el JavaScript inyecte los datos en limpio -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- VENTANA MODAL PARA ACTUALIZAR ESTADO -->
+    <div id="modalActualizar" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Actualizar Estado del Envío</h2>
+            <p id="modalCamionInfo" style="margin-bottom: 20px; color: #64748b; font-weight: bold;"></p>
+            
+            <form id="formActualizarEstado">
+                <div class="form-group" style="margin-bottom: 15px; display: flex; flex-direction: column;">
+                    <label for="nuevoEstado" style="font-weight: 600; margin-bottom: 8px;">Nuevo Estado del Camión</label>
+                    <select id="nuevoEstado" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px;">
+                        <option value="Programado">Programado</option>
+                        <option value="En Colecta">En Colecta</option>
+                        <option value="En Tránsito BR">En Tránsito BR</option>
+                        <option value="En Aduana PSZ">En Aduana PSZ</option>
+                        <option value="En Tránsito BO">En Tránsito BO</option>
+                        <option value="Entregado">Entregado</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px; display: flex; flex-direction: column;">
+                    <label for="nuevaNota" style="font-weight: 600; margin-bottom: 8px;">Nota para la Bitácora / Observaciones</label>
+                    <textarea id="nuevaNota" placeholder="Ej: 15:00 - Camión liberado..." style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px; min-height: 80px;"></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" class="btn-cancelar" id="btnCerrarModal" style="padding: 10px 20px; border: none; background: #e2e8f0; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancelar</button>
+                    <button type="submit" style="padding: 10px 20px; border: none; background: #1e3a8a; color: white; border-radius: 5px; cursor: pointer; font-weight: bold;">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- VENTANA MODAL PARA VER EL HISTORIAL DE MODIFICACIONES -->
+    <div id="modalHistorialCambios" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" id="closeHistorialX">&times;</span>
+            <h2>Línea de Tiempo del Viaje</h2>
+            <p id="historialCamionInfo" style="margin-bottom: 20px; color: #1e3a8a; font-weight: bold;"></p>
+            
+            <div id="listaLineaTiempo" style="max-height: 350px; overflow-y: auto; padding-right: 10px;">
+                <!-- Aquí el JS dibuja la línea de tiempo -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                <button type="button" id="btnCerrarHistorial" style="padding: 10px 20px; border: none; background: #0f172a; color: white; border-radius: 5px; cursor: pointer; font-weight: bold;">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conexiones JavaScript saliendo de html y entrando a java -->
+    <script src="/java/monitoreo.js"></script>
+    <script src="/java/buscador.js"></script>
+</body>
+</html>

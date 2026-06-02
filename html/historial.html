@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RODOWAY - Historial y Reportes</title>
+    <link rel="stylesheet" href="/css/historial.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>RODOWAY</h2>
+        <ul>
+            <li><a href="/html/index.html">🚚 Registro / Edición</a></li>
+            <li><a href="/html/monitoreo.html">📋 Monitoreo de Rutas</a></li>
+            <li><a href="/html/historial.html" class="active">📊 Historial / Reportes</a></li>
+            <li><a href="#">⚙️ Configuración</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Historial de Cargas y Reportes</h1>
+            <div class="search-box">
+                <input type="text" id="searchHistorial" placeholder="🔍 Buscar en el archivo...">
+            </div>
+        </div>
+
+        <div class="reporting-cards">
+            <div class="card">
+                <h3>Total Entregados</h3>
+                <p id="totalEntregados">0</p>
+                <span class="card-sub">Cargas finalizadas con éxito</span>
+            </div>
+            <div class="card">
+                <h3>Último Mes</h3>
+                <p id="entregadosMes">0</p>
+                <span class="card-sub">Mayo 2026</span>
+            </div>
+            <div class="card">
+                <h3>Empresa Principal</h3>
+                <p id="clienteTop" style="font-size: 20px; padding-top: 15px;">---</p>
+                <span class="card-sub">Mayor flujo de colectas</span>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-title">Archivo de Cargas Finalizadas</div>
+            <table class="history-table" id="tablaHistorial">
+                <thead>
+                    <tr>
+                        <th>Camión / Chofer</th>
+                        <th>Cliente / Fábrica</th>
+                        <th>Origen / Destino</th>
+                        <th>Estado</th>
+                        <th>Última Nota Bitácora</th>
+                        <th>Fecha Registro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../java/historial.js"></script>
+    <script>
+        // Pequeño ajuste para que el buscador apunte a la barra de esta pantalla
+        document.addEventListener("DOMContentLoaded", () => {
+            const barra = document.getElementById("searchHistorial");
+            if(barra) {
+                barra.id = "searchTrack"; // Engañamos un ratito al buscador.js para reutilizarlo
+            }
+        });
+    </script>
+    <script src="../java/buscador.js"></script>
+</body>
+</html>
